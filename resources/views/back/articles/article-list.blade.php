@@ -44,7 +44,7 @@
                             <p>{{str_replace('-',' ',strtoupper($article->getCategory->slug))}}</p>
                         </td>
                         <td>
-                            <a href="{{route('admin.articles.destroy',$article->slug)}}" class="btn btn-circle bg-danger">
+                            <a href="{{route('admin.articles.delete',$article->slug)}}" class="btn btn-circle bg-danger">
                                 <i class="fas fa-trash text-white"></i>
                             </a>
                             <a href="{{route('admin.articles.edit',$article->slug)}}" class="btn btn-circle bg-warning">

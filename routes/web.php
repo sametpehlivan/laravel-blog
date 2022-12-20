@@ -20,6 +20,9 @@ Route::prefix('/admin')->name('admin.')->middleware('logged')->group(function ()
 Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function (){
 
     Route::resource('articles',\App\Http\Controllers\Back\ArticleController::class);
+
+    Route::get('articles/{article}/delete','\App\Http\Controllers\Back\ArticleController@delete')->name('articles.delete');
+
     Route::get('/panel','App\Http\Controllers\Back\Dashboard@index')->name('dashboard');
     Route::get('/logout','App\Http\Controllers\Back\Dashboard@logout')->name('logout');
 });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationData;
 use function PHPUnit\Framework\directoryExists;
 
@@ -137,8 +138,22 @@ class ArticleController extends Controller
         $update_article->save();
         return redirect()->route('admin.articles.index');
     }
-    public function destroy($id)
+    public function delete($article)
     {
-        //
+        $rule = [
+            'article'=>'required|regex:/^[a-z][-a-z0-9]*$/|min:5',
+        ];
+
+        $result = Validator::make(['article'=>$article],$rule);
+        if($result->errors()->any())
+        {
+            return redirect()->route('admin.articles.index')->withErrors($result);
+        }
+        $delete_article = Article::where('slug',$article)->delete();
+        if($delete_article)
+        {
+            return back()->withErrors(['category' => 'Böyle bir yazı/makale mevcut değil']);
+        }
+        return redirect()->route('admin.articles.index');
     }
 }
